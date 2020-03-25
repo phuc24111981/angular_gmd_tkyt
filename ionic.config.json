@@ -1,0 +1,7 @@
+{
+  "name": "angular_gmd_tkyt",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
