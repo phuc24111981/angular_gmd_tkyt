@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Khai báo cá nhân</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<h3>Trong vòng 14 ngày qua Anh/Chị có thấy xuất hiện dấu hiệu nào sau đây không ?</h3>
+
+  <ion-list style="margin-bottom: 0px;">
+    <ion-item  *ngFor="let item of indexDataTrieuchung; let i = index">
+      <ion-label>{{item.TEN}}</ion-label>
+      <ion-checkbox slot="end"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

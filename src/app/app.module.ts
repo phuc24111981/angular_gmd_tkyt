@@ -4,17 +4,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 
-import { ReviewPage } from '../pages/review/review';
-import { TakescorePage } from '../pages/takescore/takescore';
-import { ViewreportPage } from '../pages/viewreport/viewreport';
-
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { CcupProvider } from '../providers/ccup/ccup';
 
-import { HttpClientModule } from '@angular/common/http';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DxButtonModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,13 +17,23 @@ import { DxPopupModule, DxTemplateModule } from 'devextreme-angular';
 import { ProgressBarModule } from "angular-progress-bar";
 import { DxLoadIndicatorModule } from 'devextreme-angular';
 
+import { KhaibaocanhanPage } from '../pages/khaibaocanhan/khaibaocanhan';
+import { LichsudichuyenPage } from '../pages/lichsudichuyen/lichsudichuyen';
+import { LichsugapgoPage } from '../pages/lichsugapgo/lichsugapgo';
+import { ThongkePage } from '../pages/thongke/thongke';
+
+import { HttpProvider } from '../providers/http/http';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 @NgModule({
   declarations: [
     MyApp,
-    ReviewPage,
-    TakescorePage,
-    ViewreportPage,
-    TabsPage
+    TabsPage,
+    KhaibaocanhanPage,
+    LichsudichuyenPage,
+    LichsugapgoPage,
+    ThongkePage
   ],
   imports: [
     BrowserModule,
@@ -41,21 +45,23 @@ import { DxLoadIndicatorModule } from 'devextreme-angular';
     DxPopupModule,
     DxTemplateModule,
     ProgressBarModule,
-    DxLoadIndicatorModule
+    DxLoadIndicatorModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ReviewPage,
-    TakescorePage,
-    ViewreportPage,
-    TabsPage
+    TabsPage,
+    KhaibaocanhanPage,
+    LichsudichuyenPage,
+    LichsugapgoPage,
+    ThongkePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CcupProvider
+    HttpProvider
   ]
 })
 export class AppModule {}

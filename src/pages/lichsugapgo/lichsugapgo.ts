@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+
 @IonicPage()
 @Component({
-  selector: 'page-review',
-  templateUrl: 'review.html',
+  selector: 'page-lichsugapgo',
+  templateUrl: 'lichsugapgo.html',
 })
-export class ReviewPage {
+export class LichsugapgoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReviewPage');
+    console.log('ionViewDidLoad LichsugapgoPage');
   }
 
 }

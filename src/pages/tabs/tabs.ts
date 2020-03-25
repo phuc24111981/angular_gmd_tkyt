@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { ReviewPage } from '../review/review';
-import { TakescorePage } from '../takescore/takescore';
-import { ViewreportPage } from '../viewreport/viewreport';
+import { KhaibaocanhanPage } from '../khaibaocanhan/khaibaocanhan';
+import { LichsudichuyenPage } from '../lichsudichuyen/lichsudichuyen';
+import { LichsugapgoPage } from '../lichsugapgo/lichsugapgo';
+import { ThongkePage } from '../thongke/thongke';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -10,9 +11,10 @@ import { ViewreportPage } from '../viewreport/viewreport';
 export class TabsPage 
 {
 
-  tab1Root = ReviewPage;
-  tab2Root = TakescorePage;
-  tab3Root = ViewreportPage;
+  tab1Root = KhaibaocanhanPage;
+  tab2Root = LichsudichuyenPage;
+  tab3Root = LichsugapgoPage;
+  tab4Root = ThongkePage;
 
   constructor() {
 
