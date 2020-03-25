@@ -1,0 +1,7 @@
+{
+  "name": "hsse",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

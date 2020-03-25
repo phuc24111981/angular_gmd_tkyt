@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Take Score</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="upload-btn-wrapper">
+    <button ion-button style="width: 100%;" color="secondary" class="btn" >Add files</button>    
+    <input type="file" accept="image/*" ng2FileSelect [uploader]="fileUploader" multiple />
+  </div><br/><br/>
+
+<button ion-button color="medium" style="width: 100%;" (click)="uploadFiles()" >Upload</button>
+
+  <h3>Your files: {{ fileUploader?.queue?.length }}</h3>
+  <button (click)="removeAllItem()" color="danger" style="width: 100%; max-width: 256px; height: 30px; border-radius: 5px;" 
+  ion-button >
+  Clear All Files
+  </button>
+  
+  <div class="container">
+    <div class="card" *ngFor="let item of fileUploader.queue ; let index = index">
+      <ion-list style="margin-bottom: 0px;">
+        <ion-item>
+
+          <img [src]="getThumbnail(index)" class="contribution-image" />
+          <br/>
+
+          <button (click)="removeItem(index)" color="danger" style="width: 100%; max-width: 256px; height: 30px; border-radius: 5px;" 
+              ion-button icon-only outline >
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+
+      
+    </div>
+    
+  </div>
+  
+  <dx-popup
+    showCloseButton="false"     
+    [width]="300"
+        [height]="89"
+        [showTitle]="false"
+        title="Progress"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="false"
+        
+        [(visible)]="popupVisible">
+        
+        <progress-bar [progress]="progress" [color]="'orange'"></progress-bar>
+        
+  </dx-popup>
+
+
+</ion-content>
