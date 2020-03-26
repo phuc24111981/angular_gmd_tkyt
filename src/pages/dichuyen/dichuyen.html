@@ -1,15 +1,49 @@
-<!--
-  Generated template for the DichuyenPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
-    <ion-title>dichuyen</ion-title>
+    <ion-title>Di chuyển</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+  <table style="width: 100%;">
+    <tr>
+      <td style="width: 100px;">
+        <ion-label color="primary">USERCODE</ion-label>
+      </td>
+      <td>
+        <ion-input type="text" [(ngModel)]="usercode"></ion-input>
+      </td>
+    </tr>
+  </table>
+
+  <dx-data-grid id="gridContainer"
+    [dataSource]="indexData"
+    [showBorders]="true"
+    >
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[10, 25, 50, 100]"
+    ></dxo-pager>
+    <dxo-search-panel
+        [visible]="true"
+        [highlightCaseSensitive]="true"
+    ></dxo-search-panel>
+
+
+    <dxi-column dataField="ID"></dxi-column>
+    <dxi-column dataField="DIA_DIEM_DEN" caption="Địa điểm đến"></dxi-column>
+    <dxi-column dataField="NGAY_BAT_DAU" caption="Ngày bắt đầu" dataType="date"></dxi-column>
+    <!-- <dxi-column caption="Discount %" dataField="Discount" cellTemplate="discountCellTemplate" dataType="number" format="percent" alignment="right" [allowGrouping]="false" cssClass="bullet"></dxi-column>
+    <dxi-column dataField="SaleDate" dataType="date"></dxi-column>
+    <dxi-column dataField="Region" dataType="string"></dxi-column>
+    <dxi-column dataField="Sector" dataType="string"></dxi-column>
+    <dxi-column dataField="Channel" dataType="string"></dxi-column>
+    <dxi-column dataField="Customer" dataType="string" [width]="150"></dxi-column> -->
+
+    
+</dx-data-grid>
+<button (click)="Addnew()" color="primary" style="height: 35px;" ion-button >Thêm mới</button>
 </ion-content>

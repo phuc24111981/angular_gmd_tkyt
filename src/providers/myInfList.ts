@@ -66,6 +66,13 @@ export class Inf {
       var result = this.mainUrl + '/khaibaotrieuchungInsert' + addString;
       return result;
   }
+
+  static khaibaotiepxucInsert(usercode: string, data: string): string 
+  {
+      var addString: string = '?u=' + usercode + '&data=' + data;
+      var result = this.mainUrl + '/khaibaotiepxucInsert' + addString;
+      return result;
+  }
     
 
   static loginUrl(username: string, password: string): string {
@@ -75,21 +82,26 @@ export class Inf {
   }
 
   
-  static workUpdate(username: string, password: string, id: number,
-      workname: string, detail: string, progress: number, comment: string, closed: boolean,
-      started_date: string, ended_date: string
+  static lichsudichuyenInsert(u: string, DIA_DIEM_DEN: string, NGAY_BAT_DAU: string,
+    GIO_BAT_DAU: string, NGAY_KET_THUC: string, GIO_KET_THUC: string, PHUONG_TIEN: string, closed: boolean
   ): string {
-      var addString: string = '?username=' + username + '&password=' + password
-          + '&id=' + id + '&workname=' + workname
-          + '&detail=' + detail
-          + '&progress=' + progress
-          + '&comment=' + comment
-          + '&closed=' + closed
-          + '&started_date=' + started_date
-          + '&ended_date=' + ended_date
-
+      var addString: string = '?u=' + u 
+            + '&DIA_DIEM_DEN=' + DIA_DIEM_DEN
+          + '&NGAY_BAT_DAU=' + NGAY_BAT_DAU 
+          + '&GIO_BAT_DAU=' + GIO_BAT_DAU
+          + '&NGAY_KET_THUC=' + NGAY_KET_THUC
+          + '&GIO_KET_THUC=' + GIO_KET_THUC
+          + '&PHUONG_TIEN=' + PHUONG_TIEN
+          
           ;
-      var result = this.mainUrl + '/workUpdate' + addString;
+      var result = this.mainUrl + '/lichsudichuyenInsert' + addString;
+      return result;
+  }
+
+  static lichsudichuyenSelect(u: string): string 
+  {
+      var addString: string = '?u=' + u;
+      var result = this.mainUrl + '/lichsudichuyenSelect' + addString;
       return result;
   }
 

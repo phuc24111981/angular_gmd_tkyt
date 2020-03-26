@@ -23,8 +23,11 @@ import { ThongkePage } from '../pages/thongke/thongke';
 import { HttpProvider } from '../providers/http/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-
-
+import { DichuyenaddnewPage } from '../pages/dichuyenaddnew/dichuyenaddnew';
+import { DxDataGridModule,
+  DxBulletModule,
+  DxTemplateModule } from 'devextreme-angular';
+  
 @NgModule({
   declarations: [
     MyApp,
@@ -32,7 +35,8 @@ import { HttpModule } from '@angular/http';
     ThongkePage,
     DichuyenPage,
     TiepxucPage,
-    TrieuchungPage
+    TrieuchungPage,
+    DichuyenaddnewPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,10 @@ import { HttpModule } from '@angular/http';
     FileUploadModule,
     ReactiveFormsModule,
     ProgressBarModule,
-    HttpModule
+    HttpModule,
+    DxDataGridModule,
+        DxTemplateModule,
+        DxBulletModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +57,8 @@ import { HttpModule } from '@angular/http';
     DichuyenPage,
     TiepxucPage,
     TrieuchungPage,
-    ThongkePage
+    ThongkePage,
+    DichuyenaddnewPage
   ],
   providers: [
     StatusBar,
