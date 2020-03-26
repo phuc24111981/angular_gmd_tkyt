@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
+import { Trieuchung } from '../../app/trieuchung';
 
 @IonicPage()
 @Component({
@@ -18,8 +19,11 @@ export class KhaibaocanhanPage
   loginPassword: string;
   wrusername: string;
   indexDataTrieuchung: any;
+  countTrieuchung: number;
   indexDataTiepxuc: any;
+  countTiepxuc: number;
   indexDataBenh: any;
+  countBenh: number;
 
   constructor(public platform: Platform, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
