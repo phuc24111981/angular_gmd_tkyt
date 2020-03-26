@@ -29,7 +29,7 @@
 
   <ion-list style="margin-bottom: 15px; margin-top: 15px;">
     <ion-item  *ngFor="let item of indexData; let i = index">
-      <ion-label>{{item.TEN}}</ion-label>
+      <ion-label style="font-size: small;">{{item.TEN}}</ion-label>
       <ion-checkbox slot="start" [(ngModel)]="item.CK"></ion-checkbox>
     </ion-item>
   </ion-list>

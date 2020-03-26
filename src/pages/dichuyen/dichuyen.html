@@ -39,9 +39,9 @@
     ></dxo-search-panel>
 
 
-    <dxi-column dataField="ID"></dxi-column>
-    <dxi-column dataField="DIA_DIEM_DEN" caption="Địa điểm đến"></dxi-column>
-    <dxi-column dataField="NGAY_BAT_DAU" caption="Ngày bắt đầu" dataType="date"></dxi-column>
+    <dxi-column dataField="ID" [width]="70"></dxi-column>
+    <dxi-column dataField="DIA_DIEM_DEN" caption="Địa điểm" ></dxi-column>
+    <dxi-column dataField="NGAY_BAT_DAU" caption="Ngày" dataType="date"  format="dd/MM/yyyy" [width]="110"></dxi-column>
     <!-- <dxi-column caption="Discount %" dataField="Discount" cellTemplate="discountCellTemplate" dataType="number" format="percent" alignment="right" [allowGrouping]="false" cssClass="bullet"></dxi-column>
     <dxi-column dataField="SaleDate" dataType="date"></dxi-column>
     <dxi-column dataField="Region" dataType="string"></dxi-column>
