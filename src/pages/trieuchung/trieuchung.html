@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Triệu chứng</ion-title>
+    <ion-buttons end>
+
+      <button ion-button (click)="loadDataTrieuchung()"
+              icon-only style="margin-left:25px;padding-right:15px;">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label color="primary">USERCODE</ion-label>
+  <ion-input type="text" [(ngModel)]="usercode"></ion-input>
+  <strong style="font-size: 13pt;">Trong 14 ngày qua Anh/Chị có xuất hiện dấu hiệu nào sau đây không ?</strong>
+
+  <ion-list style="margin-bottom: 0px; margin-top: 5px;">
+    <ion-item  *ngFor="let item of indexDataTrieuchung; let i = index">
+      <ion-label>{{item.TEN}}</ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="item.CK"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <button (click)="Save()" color="primary" style="width: 100%; max-width: 256px; height: 30px; border-radius: 5px;" ion-button >Lưu</button>
+</ion-content>

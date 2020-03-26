@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { KhaibaocanhanPage } from '../khaibaocanhan/khaibaocanhan';
-import { LichsudichuyenPage } from '../lichsudichuyen/lichsudichuyen';
-import { LichsugapgoPage } from '../lichsugapgo/lichsugapgo';
+import { TrieuchungPage } from '../trieuchung/trieuchung';
+import { TiepxucPage } from '../tiepxuc/tiepxuc';
+import { DichuyenPage } from '../dichuyen/dichuyen';
 import { ThongkePage } from '../thongke/thongke';
 
 @Component({
@@ -11,9 +11,9 @@ import { ThongkePage } from '../thongke/thongke';
 export class TabsPage 
 {
 
-  tab1Root = KhaibaocanhanPage;
-  tab2Root = LichsudichuyenPage;
-  tab3Root = LichsugapgoPage;
+  tab1Root = TrieuchungPage;
+  tab2Root = TiepxucPage;
+  tab3Root = DichuyenPage;
   tab4Root = ThongkePage;
 
   constructor() {

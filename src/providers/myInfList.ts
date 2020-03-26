@@ -60,6 +60,14 @@ export class Inf {
     return result;
   }
 
+  static khaibaotrieuchungInsert(usercode: string, data: string): string 
+  {
+      var addString: string = '?u=' + usercode + '&data=' + data;
+      var result = this.mainUrl + '/khaibaotrieuchungInsert' + addString;
+      return result;
+  }
+    
+
   static loginUrl(username: string, password: string): string {
       var addString: string = '?username=' + username + '&password=' + password;
       var result = this.mainUrl + '/Login' + addString;
