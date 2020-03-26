@@ -14,7 +14,7 @@ import { DichuyenaddnewPage } from '../dichuyenaddnew/dichuyenaddnew';
 export class DichuyenPage {
 
   devWidth: number = 0;
-  usercode: string;
+  usercode: string = '';
   indexData: any;
 
 
@@ -22,15 +22,31 @@ export class DichuyenPage {
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    this.usercode = '00070';
+    //this.usercode = '00070';
   }
-
+  presentAlert(title: string, content: string) 
+  {
+    const alert = this.alertCtrl.create
+    ({
+        title: title,
+        subTitle: content,
+        buttons: ['OK']
+    });
+    alert.present();
+  }
   Addnew()
   {
-    this.navCtrl.push(DichuyenaddnewPage,
-      {
-          user: this.usercode
-      });
+    if(this.usercode.length > 0)
+    {
+      this.navCtrl.push(DichuyenaddnewPage,
+        {
+            user: this.usercode
+        });
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+    }
   }
 
   ionViewDidEnter() 

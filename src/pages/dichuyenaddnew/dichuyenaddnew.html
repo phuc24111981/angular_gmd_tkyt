@@ -7,8 +7,28 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label color="primary">Ngày bắt đầu</ion-label>
-      <ion-datetime style="color:#387ef5;" pickerFormat="YYYY-MM-DD" displayFormat="DD/MM/YYYY" [(ngModel)]="wrdate"></ion-datetime>
+      <ion-input type="text" [(ngModel)]="diadiemden" placeholder="Địa điểm đến"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="phuongtien" placeholder="Phương tiện"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Ngày bắt đầu</ion-label>
+      <ion-datetime style="color:#387ef5;" pickerFormat="YYYY-MM-DD" displayFormat="DD/MM/YYYY" [(ngModel)]="ngaybatdau"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Giờ bắt đầu</ion-label>
+      <ion-datetime style="color:#387ef5;" pickerFormat="HH:mm" displayFormat="HH:mm" [(ngModel)]="giobatdau"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Ngày kết thúc</ion-label>
+      <ion-datetime style="color:#387ef5;" pickerFormat="YYYY-MM-DD" displayFormat="DD/MM/YYYY" [(ngModel)]="ngayketthuc"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Giờ kết thúc</ion-label>
+      <ion-datetime style="color:#387ef5;" pickerFormat="HH:mm" displayFormat="HH:mm" [(ngModel)]="giokethuc"></ion-datetime>
+    </ion-item>
+
   </ion-list>
+  <button (click)="Save()" color="primary" style="height: 35px;" ion-button >Lưu</button>
 </ion-content>

@@ -22,12 +22,71 @@ export class DichuyenaddnewPage
   giokethuc: string = '';
   phuongtien: string = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public ht:HttpProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() 
+  {
     this.usercode = this.navParams.get("user");
+    this.ngaybatdau = Inf.getCurrentDatetimeWithTimeZone();
+    this.ngayketthuc = Inf.getCurrentDatetimeWithTimeZone();
+    this.giobatdau = '00:00';
+    this.giokethuc = '00:00';
     console.log(this.usercode);
+  }
+
+  presentAlert(title: string, content: string) 
+  {
+    const alert = this.alertCtrl.create
+    ({
+        title: title,
+        subTitle: content,
+        buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  Save()
+  {
+    if(this.diadiemden.length > 0 && this.phuongtien.length > 0)
+    {
+      console.log(this.saveData);
+      var dataM: string = JSON.stringify(this.saveData);
+      console.log(dataM);
+      var urlString = Inf.lichsudichuyenInsert(this.usercode,this.diadiemden,this.ngaybatdau,this.giobatdau,
+        this.ngayketthuc,this.giokethuc,this.phuongtien);
+      console.log(urlString);
+      this.ht.load(urlString).then(data => 
+        {
+          this.jsonSaveParse(data);
+        });
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Vui lòng nhập đầy đủ thông tin');
+    }
+    
+  }
+
+  jsonSaveParse(dataMessage: any) 
+  {
+    console.log(dataMessage);
+    if( dataMessage.length > 0 )
+    {
+        let str = JSON.stringify(dataMessage);
+        str = str.replace(/\\'/g, "'");
+        let jsonData = JSON.parse(str);
+
+        if (jsonData[0]['r'] == 0) 
+        {
+          this.presentAlert("Lỗi", "Có lỗi xảy ra, không lưu được");
+        }
+        else 
+        {
+          this.presentAlert("Thành công", "Dữ liệu đã được lưu");
+        }
+    }
+
   }
 
 }

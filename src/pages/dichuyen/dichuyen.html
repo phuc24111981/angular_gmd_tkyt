@@ -1,6 +1,12 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Di chuyển</ion-title>
+    <ion-buttons end>
+    <button ion-button (click)="loadData()"
+    icon-only style="margin-left:25px;padding-right:15px;">
+    <ion-icon name="refresh"></ion-icon>
+    </button>
+  </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +18,7 @@
         <ion-label color="primary">USERCODE</ion-label>
       </td>
       <td>
-        <ion-input type="text" [(ngModel)]="usercode"></ion-input>
+        <ion-input type="text" [(ngModel)]="usercode" placeholder="Nhập mã nhân viên"></ion-input>
       </td>
     </tr>
   </table>

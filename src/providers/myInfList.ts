@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Inf {
 
-  static mainUrl: string = 'http://192.168.2.157:8086/kbyt/z.asmx';
+  //static mainUrl: string = 'http://192.168.2.157:8086/kbyt/z.asmx';
+  static mainUrl: string = 'http://118.69.59.60:8086/kbyt/z.asmx';
 
   public loggedUsername: string;
   public loggedPassword: string;
@@ -83,7 +84,7 @@ export class Inf {
 
   
   static lichsudichuyenInsert(u: string, DIA_DIEM_DEN: string, NGAY_BAT_DAU: string,
-    GIO_BAT_DAU: string, NGAY_KET_THUC: string, GIO_KET_THUC: string, PHUONG_TIEN: string, closed: boolean
+    GIO_BAT_DAU: string, NGAY_KET_THUC: string, GIO_KET_THUC: string, PHUONG_TIEN: string
   ): string {
       var addString: string = '?u=' + u 
             + '&DIA_DIEM_DEN=' + DIA_DIEM_DEN

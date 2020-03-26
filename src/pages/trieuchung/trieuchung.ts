@@ -17,7 +17,7 @@ export class TrieuchungPage
 
   loginUsername: string;
   loginPassword: string;
-  usercode: string;
+  usercode: string = '';
   indexDataTrieuchung: any;
 
 
@@ -26,7 +26,7 @@ export class TrieuchungPage
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    this.usercode = '00070';
+    //this.usercode = '00070';
   }
 
   presentAlert(title: string, content: string) 
@@ -42,15 +42,22 @@ export class TrieuchungPage
 
   Save()
   {
-    console.log(this.indexDataTrieuchung);
-    var dataM: string = JSON.stringify(this.indexDataTrieuchung);
-    console.log(dataM);
-    var urlString = Inf.khaibaotrieuchungInsert(this.usercode,dataM);
-    console.log(urlString);
-    this.ht.load(urlString).then(data => 
-      {
-        this.jsonSaveParseTrieuchung(data);
-      });
+    if(this.usercode.length > 0)
+    {
+      console.log(this.indexDataTrieuchung);
+      var dataM: string = JSON.stringify(this.indexDataTrieuchung);
+      console.log(dataM);
+      var urlString = Inf.khaibaotrieuchungInsert(this.usercode,dataM);
+      console.log(urlString);
+      this.ht.load(urlString).then(data => 
+        {
+          this.jsonSaveParseTrieuchung(data);
+        });
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+    }
   }
 
   jsonSaveParseTrieuchung(dataMessage: any) 

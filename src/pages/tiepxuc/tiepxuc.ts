@@ -13,7 +13,7 @@ import { Inf } from '../../providers/myInfList';
 export class TiepxucPage 
 {
   devWidth: number = 0;
-  usercode: string;
+  usercode: string = '';
   indexData: any;
 
 
@@ -21,7 +21,7 @@ export class TiepxucPage
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    this.usercode = '00070';
+    //this.usercode = '00070';
   }
 
   presentAlert(title: string, content: string) 
@@ -37,15 +37,22 @@ export class TiepxucPage
 
   Save()
   {
-    console.log(this.indexData);
-    var dataM: string = JSON.stringify(this.indexData);
-    console.log(dataM);
-    var urlString = Inf.khaibaotiepxucInsert(this.usercode,dataM);
-    console.log(urlString);
-    this.ht.load(urlString).then(data => 
-      {
-        this.jsonSaveParse(data);
-      });
+    if(this.usercode.length > 0)
+    {
+      console.log(this.indexData);
+      var dataM: string = JSON.stringify(this.indexData);
+      console.log(dataM);
+      var urlString = Inf.khaibaotiepxucInsert(this.usercode,dataM);
+      console.log(urlString);
+      this.ht.load(urlString).then(data => 
+        {
+          this.jsonSaveParse(data);
+        });
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+    }
   }
 
   jsonSaveParse(dataMessage: any) 
