@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, enableProdMode } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
+
+if(!/localhost/.test(document.location.host)) {
+  enableProdMode();
+}
 
 @IonicPage()
 @Component({

@@ -24,47 +24,51 @@ import { HttpProvider } from '../providers/http/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { DichuyenaddnewPage } from '../pages/dichuyenaddnew/dichuyenaddnew';
-import { DxDataGridModule,
-  DxBulletModule,
-  DxTemplateModule } from 'devextreme-angular';
-  
-@NgModule({
-  declarations: [
-    MyApp,
-    TabsPage,
-    ThongkePage,
-    DichuyenPage,
-    TiepxucPage,
-    TrieuchungPage,
-    DichuyenaddnewPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpClientModule,
-    FileUploadModule,
-    ReactiveFormsModule,
-    ProgressBarModule,
-    HttpModule,
-    DxDataGridModule,
-        DxTemplateModule,
-        DxBulletModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    TabsPage,
-    DichuyenPage,
-    TiepxucPage,
-    TrieuchungPage,
-    ThongkePage,
-    DichuyenaddnewPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    HttpProvider
-  ]
-})
+// import { DxDataGridModule, DxBulletModule, DxTemplateModule, DxPivotGridModule, DxChartModule } from 'devextreme-angular';
+import { DevExtremeModule } from 'devextreme-angular'; // import all devextreme modules
+
+@NgModule
+(
+  {
+    declarations: 
+    [
+      MyApp,
+      TabsPage,
+      ThongkePage,
+      DichuyenPage,
+      TiepxucPage,
+      TrieuchungPage,
+      DichuyenaddnewPage
+    ],
+    imports: 
+    [
+      BrowserModule,
+      IonicModule.forRoot(MyApp),
+      HttpClientModule,
+      FileUploadModule,
+      ReactiveFormsModule,
+      ProgressBarModule,
+      HttpModule,
+      DevExtremeModule
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: 
+    [
+      MyApp,
+      TabsPage,
+      DichuyenPage,
+      TiepxucPage,
+      TrieuchungPage,
+      ThongkePage,
+      DichuyenaddnewPage
+    ],
+    providers: 
+    [
+      StatusBar,
+      SplashScreen,
+      {provide: ErrorHandler, useClass: IonicErrorHandler},
+      HttpProvider
+    ]
+  }
+)
 export class AppModule {}

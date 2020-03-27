@@ -5,5 +5,29 @@
 </ion-header>
 
 <ion-content padding>
-
+  <div id="pivotgrid-demo">
+    <dx-chart id="sales-chart">
+      <dxo-common-series-settings type="bar"></dxo-common-series-settings>
+      <dxo-size [height]="200"></dxo-size>
+      <dxo-adaptive-layout [width]="450"></dxo-adaptive-layout>
+      <dxo-tooltip [enabled]="true" format="currency" [customizeTooltip]="customizeTooltip"></dxo-tooltip>
+    </dx-chart>
+  
+    <dx-pivot-grid id="pivotgrid"
+      [allowSortingBySummary]="true"
+      [allowFiltering]="true"
+      [showBorders]="true"
+      [allowSortingBySummary]="true"
+      [showColumnGrandTotals]="false"
+      [showRowGrandTotals]="false"
+      [showRowTotals]="false"
+      [showColumnTotals]="false"
+      [dataSource]="pivotGridDataSource"
+      
+      >
+      <dxo-export [enabled]="true" fileName="{{xlsName}}" [allowExportSelectedData]="false" [printingEnabled]="true"></dxo-export>
+      <dxo-field-chooser [enabled]="true" [height]="400"></dxo-field-chooser>
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
+    </dx-pivot-grid>
+  </div>
 </ion-content>
