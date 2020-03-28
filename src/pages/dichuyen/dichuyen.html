@@ -18,7 +18,8 @@
         <ion-label color="primary">USERCODE</ion-label>
       </td>
       <td>
-        <ion-input type="text" [(ngModel)]="usercode" placeholder="Nhập mã nhân viên"></ion-input>
+        <!-- <ion-input type="text" [(ngModel)]="usercode" placeholder="Nhập mã nhân viên"></ion-input> -->
+        <ion-label color="primary">{{usercode}}</ion-label>
       </td>
     </tr>
   </table>
@@ -41,7 +42,7 @@
 
     <dxi-column dataField="ID" [width]="70"></dxi-column>
     <dxi-column dataField="DIA_DIEM_DEN" caption="Địa điểm" ></dxi-column>
-    <dxi-column dataField="NGAY_BAT_DAU" caption="Ngày" dataType="date"  format="dd/MM/yyyy" [width]="110"></dxi-column>
+    <dxi-column dataField="NGAY_BAT_DAU" caption="Ngày" dataType="date"  format="dd/MM/yyyy" [width]="110"  [sortIndex]="0" sortOrder="desc"></dxi-column>
     <!-- <dxi-column caption="Discount %" dataField="Discount" cellTemplate="discountCellTemplate" dataType="number" format="percent" alignment="right" [allowGrouping]="false" cssClass="bullet"></dxi-column>
     <dxi-column dataField="SaleDate" dataType="date"></dxi-column>
     <dxi-column dataField="Region" dataType="string"></dxi-column>
@@ -51,5 +52,7 @@
 
     
 </dx-data-grid>
-<button (click)="Addnew()" color="primary" style="height: 35px;" ion-button >Thêm mới</button>
+<br/>
+<!-- <button (click)="Addnew()" color="primary" style="height: 35px;" ion-button >Thêm mới</button> -->
+<dx-button type="default" text="Thêm mới" (onClick)="Save()" width="100%"></dx-button>
 </ion-content>

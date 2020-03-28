@@ -2,6 +2,7 @@ import { Component, enableProdMode } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Inf } from '../../providers/myInfList';
+import { dbase } from '../../providers/dbase';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -30,7 +31,8 @@ export class DichuyenaddnewPage
 
   ionViewDidLoad() 
   {
-    this.usercode = this.navParams.get("user");
+    //this.usercode = this.navParams.get("user");
+    this.usercode = dbase.getUser();
     this.ngaybatdau = Inf.getCurrentDatetimeWithTimeZone();
     this.ngayketthuc = Inf.getCurrentDatetimeWithTimeZone();
     this.giobatdau = '00:00';

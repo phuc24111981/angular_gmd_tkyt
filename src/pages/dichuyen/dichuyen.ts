@@ -4,6 +4,7 @@ import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { DichuyenaddnewPage } from '../dichuyenaddnew/dichuyenaddnew';
+import { dbase } from '../../providers/dbase';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -26,7 +27,7 @@ export class DichuyenPage {
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    //this.usercode = '00070';
+    this.usercode = dbase.getUser();
   }
   presentAlert(title: string, content: string) 
   {

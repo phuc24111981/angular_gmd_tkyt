@@ -1,0 +1,35 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Đăng nhập</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <dx-validation-group>
+    <div class="dx-field">
+        <dx-text-box [(value)]="login" placeholder="Mã nhân viên" width="100%">
+            <dx-validator>
+                <dxi-validation-rule type="required" message="Nhập mã nhân viên"></dxi-validation-rule>
+            </dx-validator>
+        </dx-text-box>
+    </div>
+    <div class="dx-field">
+        <dx-text-box mode="password" [(value)]="password" placeholder="Mật khẩu" width="100%">
+            <dx-validator>
+                <dxi-validation-rule type="required" message="Nhập mật khẩu"></dxi-validation-rule>
+            </dx-validator>
+        </dx-text-box>
+    </div>
+
+    <div class="dx-field">
+        <dx-button type="default" text="Login" (onClick)="onLoginClick($event)" width="100%"></dx-button>
+    </div>
+
+</dx-validation-group>
+</ion-content>

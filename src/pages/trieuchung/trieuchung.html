@@ -19,7 +19,8 @@
         <ion-label color="primary">USERCODE</ion-label>
       </td>
       <td>
-        <ion-input type="text" [(ngModel)]="usercode" placeholder="Nhập mã nhân viên"></ion-input>
+        <!-- <ion-input type="text" [(ngModel)]="usercode" placeholder="Nhập mã nhân viên"></ion-input> -->
+        <ion-label color="primary">{{usercode}}</ion-label>
       </td>
     </tr>
   </table>
@@ -33,6 +34,6 @@
       <ion-checkbox slot="start" [(ngModel)]="item.CK"></ion-checkbox>
     </ion-item>
   </ion-list>
-  <button block (click)="Save()" color="primary" style="height: 35px;" ion-button >Lưu</button>
-  
+  <!-- <button block (click)="Save()" color="primary" style="height: 35px;" ion-button >Lưu</button> -->
+  <dx-button type="default" text="Lưu" (onClick)="Save()" width="100%"></dx-button>
 </ion-content>

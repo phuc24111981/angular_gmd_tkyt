@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
+import { dbase } from '../../providers/dbase';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -25,7 +26,7 @@ export class TiepxucPage
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    //this.usercode = '00070';
+    this.usercode = dbase.getUser();
   }
 
   presentAlert(title: string, content: string) 
