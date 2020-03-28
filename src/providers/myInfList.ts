@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 export class Inf {
 
     // Dùng cho Web app và debug tại máy host ( máy để bàn công ty)
-  static mainUrl: string = 'http://192.168.2.157:8086/kbyt/z.asmx';
+  //static mainUrl: string = 'http://192.168.2.157:8086/kbyt/z.asmx';
 
 
   // Dùng cho build app Mobile
-  //static mainUrl: string = 'http://118.69.59.60:8086/kbyt/z.asmx';
+  static mainUrl: string = 'http://118.69.59.60:8086/kbyt/z.asmx';
 
   public loggedUsername: string;
   public loggedPassword: string;
