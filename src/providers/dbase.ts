@@ -10,6 +10,8 @@ export class dbase
 
     }
 
+    
+
     public static setUser(usercode: string) 
     {
         localStorage.setItem('user', usercode);

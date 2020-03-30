@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
@@ -25,16 +25,27 @@ export class TrieuchungPage
   loginPassword: string;
   usercode: string = '';
   indexDataTrieuchung: any;
+  loading: any;
 
 
-
-  constructor(public alertCtrl: AlertController, public platform: Platform, 
+  constructor(public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
     this.usercode = dbase.getUser();
+    
   }
 
+  presentloading()
+  {
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
+  }
+
+  dismissloading()
+  {
+    this.loading.dismiss();
+  }
 
   presentAlert(title: string, content: string) 
   {
@@ -51,6 +62,7 @@ export class TrieuchungPage
   {
     if(this.usercode.length > 0)
     {
+      this.presentloading();
       console.log(this.indexDataTrieuchung);
       var dataM: string = JSON.stringify(this.indexDataTrieuchung);
       console.log(dataM);
@@ -69,6 +81,7 @@ export class TrieuchungPage
 
   jsonSaveParseTrieuchung(dataMessage: any) 
   {
+    this.dismissloading(); 
     this.indexDataTrieuchung = null;
     console.log(dataMessage);
     if( dataMessage.length > 0 )
@@ -86,7 +99,7 @@ export class TrieuchungPage
           this.presentAlert("Thành công", "Dữ liệu đã được lưu");
         }
     }
-
+    
   }
 
   ionViewDidEnter() 
@@ -97,6 +110,7 @@ export class TrieuchungPage
 
   loadDataTrieuchung() 
   {
+    this.presentloading();
     var urlString = Inf.trieuchungSelectAll();
     console.log(urlString);
     this.ht.load(urlString)
@@ -108,6 +122,7 @@ export class TrieuchungPage
 
   jsonFlatParseTrieuchung(dataMessage: any) 
   {
+    this.dismissloading();
     this.indexDataTrieuchung = null;
     console.log(dataMessage);
     if( dataMessage.length > 0 )
@@ -117,7 +132,7 @@ export class TrieuchungPage
         let jsonData = JSON.parse(str);
         this.indexDataTrieuchung = jsonData;
     }
-
+    
   }
 
 }

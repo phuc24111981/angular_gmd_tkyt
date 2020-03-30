@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
@@ -21,14 +21,26 @@ export class DichuyenPage {
   devWidth: number = 0;
   usercode: string = '';
   indexData: any;
+  loading: any;
 
-
-  constructor(public alertCtrl: AlertController, public platform: Platform, 
+  constructor(public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
     this.usercode = dbase.getUser();
   }
+
+  presentloading()
+  {
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
+  }
+
+  dismissloading()
+  {
+    this.loading.dismiss();
+  }
+
   presentAlert(title: string, content: string) 
   {
     const alert = this.alertCtrl.create
@@ -61,6 +73,7 @@ export class DichuyenPage {
 
   loadData() 
   {
+    this.presentloading();
     var urlString = Inf.lichsudichuyenSelect(this.usercode);
     console.log(urlString);
     this.ht.load(urlString)
@@ -72,6 +85,7 @@ export class DichuyenPage {
 
   jsonFlatParse(dataMessage: any) 
   {
+    this.dismissloading();
     this.indexData = null;
     console.log(dataMessage);
     if( dataMessage.length > 0 )

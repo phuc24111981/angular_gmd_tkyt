@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { dbase } from '../../providers/dbase';
 
 import { TabsPage } from '../tabs/tabs';
@@ -13,10 +13,19 @@ export class LoginPage
 {
   login = '';
   password = '';
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loading: any;
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams) {
+  }
+  presentloading()
+  {
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
   }
 
+  dismissloading()
+  {
+    this.loading.dismiss();
+  }
   onLoginClick(args) {
     if (!args.validationGroup.validate().isValid) {
       return;
@@ -29,3 +38,5 @@ export class LoginPage
   }
 
 }
+
+
