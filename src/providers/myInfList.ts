@@ -72,10 +72,24 @@ export class Inf {
       return result;
   }
 
+  static khaibaotrieuchungSelectAll(): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/khaibaotrieuchungSelectAll' + addString;
+      return result;
+  }
+
   static khaibaotiepxucInsert(usercode: string, data: string): string 
   {
       var addString: string = '?u=' + usercode + '&data=' + data;
       var result = this.mainUrl + '/khaibaotiepxucInsert' + addString;
+      return result;
+  }
+
+  static khaibaotiepxucSelectAll(): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/khaibaotiepxucSelectAll' + addString;
       return result;
   }
     
@@ -107,6 +121,13 @@ export class Inf {
   {
       var addString: string = '?u=' + u;
       var result = this.mainUrl + '/lichsudichuyenSelect' + addString;
+      return result;
+  }
+
+  static lichsudichuyenSelectAll(u: string): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/lichsudichuyenSelectAll' + addString;
       return result;
   }
 

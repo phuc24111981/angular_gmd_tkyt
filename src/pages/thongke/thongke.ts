@@ -1,7 +1,10 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { DxPivotGridComponent, DxChartComponent } from 'devextreme-angular';
+import { HttpProvider } from '../../providers/http/http';
+import { Platform } from 'ionic-angular';
+import { Inf } from '../../providers/myInfList';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -11,6 +14,7 @@ if(!/localhost/.test(document.location.host)) {
 @Component({
   selector: 'page-thongke',
   templateUrl: 'thongke.html',
+  providers: [HttpProvider]
 })
 export class ThongkePage implements AfterViewInit
 {
@@ -18,36 +22,31 @@ export class ThongkePage implements AfterViewInit
   @ViewChild(DxChartComponent) chart: DxChartComponent;
   pivotGridDataSource: any;
   xlsName:string = 'gmd_kbyt';
-  constructor(public navCtrl: NavController, public navParams: NavParams) 
+  loading: any;
+  trieuchungData: any;
+
+  constructor(public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.customizeTooltip = this.customizeTooltip.bind(this);
     this.pivotGridDataSource = 
     {
       fields: [{
-        caption: "Region",
+        caption: "Đơn vị",
         width: 120,
-        dataField: "region",
+        dataField: "tendv",
         area: "row",
-        sortBySummaryField: "Total"
+        // sortBySummaryField: "Total"
       }, {
-        caption: "City",
-        dataField: "city",
+        caption: "Phòng ban",
+        dataField: "tenpb",
         width: 150,
         area: "row"
-      }, {
-        dataField: "date",
-        dataType: "date",
-        area: "column"
-      }, {
-        groupName: "date",
-        groupInterval: "month",
-        visible: false
-      }, {
+      }, 
+      {
         caption: "Total",
         dataField: "amount",
         dataType: "number",
         summaryType: "sum",
-        format: "currency",
         area: "data"
       }],
       store: [{
@@ -4560,9 +4559,45 @@ export class ThongkePage implements AfterViewInit
     };
   }
   
-  ionViewDidLoad() 
+  presentloading()
   {
-    console.log('ionViewDidLoad ThongkePage');
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
+  }
+
+  dismissloading()
+  {
+    this.loading.dismiss();
+  }
+  ionViewDidEnter() 
+  {    
+    this.loadDataTrieuchung();
+  }
+
+  loadDataTrieuchung() 
+  {
+    this.presentloading();
+    var urlString = Inf.khaibaotrieuchungSelectAll();
+    this.ht.load(urlString)
+    .then(data => 
+    {
+      this.jsonTrieuchungParse(data);
+    });
+  }
+
+  jsonTrieuchungParse(dataMessage: any) 
+  {
+    this.dismissloading();
+    this.trieuchungData = null;
+    console.log(dataMessage);
+    if( dataMessage.length > 0 )
+    {
+        let str = JSON.stringify(dataMessage);
+        str = str.replace(/\\'/g, "'");
+        let jsonData = JSON.parse(str);
+        this.trieuchungData = jsonData;
+    }
+
   }
 
 }

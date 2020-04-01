@@ -101,7 +101,7 @@ export class TiepxucPage
   {
     this.presentloading();
     var urlString = Inf.tiepxucSelectAll();
-    console.log('sdạlksadjf' + urlString);
+    //console.log('sdạlksadjf' + urlString);
     this.ht.load(urlString)
     .then(data => 
     {
