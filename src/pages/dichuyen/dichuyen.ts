@@ -73,7 +73,7 @@ export class DichuyenPage {
 
   loadData() 
   {
-    this.presentloading();
+    //this.presentloading();
     var urlString = Inf.lichsudichuyenSelect(this.usercode);
     console.log(urlString);
     this.ht.load(urlString)
