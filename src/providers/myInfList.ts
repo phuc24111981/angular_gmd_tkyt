@@ -92,6 +92,31 @@ export class Inf {
       var result = this.mainUrl + '/khaibaotiepxucSelectAll' + addString;
       return result;
   }
+
+  // Bao cao tong hop
+  static khaibaodichuyenCountAll(): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/khaibaodichuyenCountAll' + addString;
+      return result;
+  }
+
+  static khaibaotiepxucCountAll(): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/khaibaotiepxucCountAll' + addString;
+      return result;
+  }
+  static khaibaotrieuchungCountAll(): string 
+  {
+      var addString: string = '';
+      var result = this.mainUrl + '/khaibaotrieuchungCountAll' + addString;
+      return result;
+  }
+
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
 
   static loginUrl(username: string, password: string): string {
