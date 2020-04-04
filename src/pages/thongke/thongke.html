@@ -75,12 +75,12 @@
   ></dxo-pager>
 
 
-  <dxi-column dataField="TEN"  caption="Tiếp xúc" [width]="165" cellTemplate="cellTemplate"></dxi-column>
-  <dxi-column dataField="SL" caption="Số lượng" dataType="number" alignment="right" [width]="65" ></dxi-column>
+  <dxi-column dataField="TEN"  caption="Tiếp xúc" [width]="175" cellTemplate="cellTemplate"></dxi-column>
+  <dxi-column dataField="SL" caption="Số lượng" dataType="number" alignment="right" [width]="55" ></dxi-column>
   <dxi-column dataField="madv" dataType="string" caption="Đơn vị" [width]="70" [groupIndex]="0"></dxi-column>
   <dxi-column dataField="tenpb" dataType="string" caption="Phòng ban" [groupIndex]="1"></dxi-column>
   <div *dxTemplate="let cell of 'cellTemplate'">
-    <div style="font-size: small;">{{cell.text}}</div>
+    <div style="font-size: smaller;">{{cell.text}}</div>
   </div>
   <dxo-export [enabled]="export" fileName="gmd_kb_tiepxuc"></dxo-export>
   <dxo-group-panel [visible]="true"></dxo-group-panel>

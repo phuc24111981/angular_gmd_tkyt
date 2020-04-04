@@ -85,7 +85,7 @@ export class DichuyenPage {
 
   jsonFlatParse(dataMessage: any) 
   {
-    this.dismissloading();
+    //this.dismissloading();
     this.indexData = null;
     console.log(dataMessage);
     if( dataMessage.length > 0 )
