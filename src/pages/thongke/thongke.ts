@@ -22,14 +22,31 @@ export class ThongkePage
 //   @ViewChild(DxPivotGridComponent) pivotGrid: DxPivotGridComponent;
 //   @ViewChild(DxChartComponent) chart: DxChartComponent;
 //   pivotGridDataSource: any;
-  xlsName1:string = 'gmd_kbyt_trieuchung';
+
   loading: any;
   trieuchungData: any;
+  tiepxucData: any;
+  dichuyenData: any;
 
-  constructor(public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
+  export: boolean = true;
+
+  constructor(public platform: Platform, public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     //this.customizeTooltip = this.customizeTooltip.bind(this);
+    if (this.platform.is('android')) 
+    {
+      this.export = false;
 
+    } 
+    else if (this.platform.is('ios')) 
+    {
+      this.export = false;
+    } 
+    else 
+    {
+      this.export = true;
+    }
+    
   }
 
 //   ngAfterViewInit() 
@@ -70,28 +87,68 @@ export class ThongkePage
 
   loadDataTrieuchung() 
   {
-    this.presentloading();
+    //this.presentloading();
     var urlString = Inf.khaibaotrieuchungCountAll();
     this.ht.load(urlString)
     .then(data => 
     {
-      this.jsonTrieuchungParse(data);
+      //this.dismissloading();
+      let dataMessage: any = data;
+      this.trieuchungData = null;
+      console.log(dataMessage);
+      if( dataMessage.length > 0 )
+      {
+          let str = JSON.stringify(dataMessage);
+          str = str.replace(/\\'/g, "'");
+          let jsonData = JSON.parse(str);
+          this.trieuchungData = jsonData;
+      }
+      this.loadDataTiepxuc();
     });
   }
 
-  jsonTrieuchungParse(dataMessage: any) 
+  loadDataTiepxuc() 
   {
-    this.dismissloading();
-    this.trieuchungData = null;
-    console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    //this.presentloading();
+    var urlString = Inf.khaibaotiepxucCountAll();
+    this.ht.load(urlString)
+    .then(data => 
     {
-        let str = JSON.stringify(dataMessage);
-        str = str.replace(/\\'/g, "'");
-        let jsonData = JSON.parse(str);
-        this.trieuchungData = jsonData;
-    }
-
+      //this.dismissloading();
+      let dataMessage: any = data;
+      this.tiepxucData = null;
+      console.log(dataMessage);
+      if( dataMessage.length > 0 )
+      {
+          let str = JSON.stringify(dataMessage);
+          str = str.replace(/\\'/g, "'");
+          let jsonData = JSON.parse(str);
+          this.tiepxucData = jsonData;
+      }
+      this.loadDataDichuyen();
+    });
   }
+
+  loadDataDichuyen() 
+  {
+    //this.presentloading();
+    var urlString = Inf.khaibaodichuyenCountAll();
+    this.ht.load(urlString)
+    .then(data => 
+    {
+      //this.dismissloading();
+      let dataMessage: any = data;
+      this.dichuyenData = null;
+      console.log(dataMessage);
+      if( dataMessage.length > 0 )
+      {
+          let str = JSON.stringify(dataMessage);
+          str = str.replace(/\\'/g, "'");
+          let jsonData = JSON.parse(str);
+          this.dichuyenData = jsonData;
+      }
+    });
+  }
+  
 
 }

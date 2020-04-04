@@ -1,9 +1,9 @@
 /*!
  * DevExpress Gantt (dx-gantt)
- * Version: 0.0.27
- * Build date: Thu Nov 28 2019
+ * Version: 0.0.29
+ * Build date: Fri Jan 24 2020
  * 
- * Copyright (c) 2012 - 2019 Developer Express Inc. ALL RIGHTS RESERVED
+ * Copyright (c) 2012 - 2020 Developer Express Inc. ALL RIGHTS RESERVED
  * Read about DevExpress licensing here: https://www.devexpress.com/Support/EULAs
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1117,11 +1117,8 @@ var TaskAreaManager = (function () {
     };
     TaskAreaManager.prototype.changeTaskSelection = function (index) {
         var clickedTask = this.ganttView.viewModel.items[index];
-        if (clickedTask) {
-            this.ganttView.unselectCurrentSelectedTask();
+        if (clickedTask)
             this.ganttView.ganttOwner.changeGanttTaskSelection(clickedTask.task.id, true);
-            this.ganttView.selectTask(clickedTask.task.internalId);
-        }
     };
     TaskAreaManager.prototype.onTaskAreaClick = function (evt) {
         var now = new Date(Date.now());
@@ -1134,8 +1131,8 @@ var TaskAreaManager = (function () {
     };
     TaskAreaManager.prototype.isConnectorLine = function (evt) {
         var source = DomUtils_1.DomUtils.getEventSource(evt);
-        return DomUtils_1.DomUtils.getClassNameList(source).indexOf(GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_HORIZONTAL) >= 0 ||
-            DomUtils_1.DomUtils.getClassNameList(source).indexOf(GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_VERTICAL) >= 0;
+        return DomUtils_1.DomUtils.elementHasCssClass(source, GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_HORIZONTAL) ||
+            DomUtils_1.DomUtils.elementHasCssClass(source, GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_VERTICAL);
     };
     TaskAreaManager.DBLCLICK_INTERVAL = 300;
     return TaskAreaManager;
@@ -2052,7 +2049,7 @@ var GridLayoutCalculator = (function () {
         var connectorPoints = this.getConnectorPoints(predessorIndex, successorIndex, connectorType);
         for (var i = 0; i < connectorPoints.length - 1; i++)
             result.push(this.getConnectorLineInfo(id, connectorPoints[i], connectorPoints[i + 1], i == 0 || i == connectorPoints.length - 2));
-        result.push(this.getArrowInfo(connectorPoints, result, predessorIndex, successorIndex));
+        result.push(this.getArrowInfo(id, connectorPoints, result, predessorIndex, successorIndex));
         return result;
     };
     GridLayoutCalculator.prototype.getConnectorLineInfo = function (id, startPoint, endPoint, isEdgeLine) {
@@ -2079,12 +2076,13 @@ var GridLayoutCalculator = (function () {
             result.width = Math.abs(endPoint.x - startPoint.x + sizeCorrection);
         return result;
     };
-    GridLayoutCalculator.prototype.getArrowInfo = function (connectorPoints, connectorLines, predessorIndex, successorIndex) {
+    GridLayoutCalculator.prototype.getArrowInfo = function (id, connectorPoints, connectorLines, predessorIndex, successorIndex) {
         var result = new GridElementInfo_1.GridElementInfo();
         var lineInfo = this.findArrowLineInfo(connectorLines, predessorIndex, successorIndex);
         var arrowPosition = this.getArrowPosition(connectorPoints, predessorIndex, successorIndex);
         result.className = this.getArrowClassName(arrowPosition);
         result.setPosition(this.getArrowPoint(lineInfo, arrowPosition));
+        result.setAttribute("dependency-id", id);
         return result;
     };
     GridLayoutCalculator.prototype.findArrowLineInfo = function (connectorLines, predessorIndex, successorIndex) {
@@ -2400,20 +2398,33 @@ var GridLayoutCalculator = (function () {
         return result;
     };
     GridLayoutCalculator.prototype.createTileToConnectorLinesMap = function () {
-        var _this = this;
         this.tileToDependencyMap = [];
         for (var i = 0; i < this.viewModel.items.length; i++) {
+            for (var j = 0; j < this.viewModel.items[i].dependencies.length; j++)
+                this.createConnecotInfo(this.viewModel.items[i].dependencies[j], this.viewModel.items[i].visibleIndex);
+        }
+    };
+    GridLayoutCalculator.prototype.updateTileToConnectorLinesMap = function (dependencyId) {
+        this.tileToDependencyMap.forEach(function (map, index, tileToDependencyMap) {
+            tileToDependencyMap[index] = map.filter(function (info) { return info.attr["dependency-id"] != dependencyId; });
+        });
+        for (var i = 0; i < this.viewModel.items.length; i++) {
             for (var j = 0; j < this.viewModel.items[i].dependencies.length; j++) {
-                var predessorIndex = this.viewModel.items[i].dependencies[j].predecessor.visibleIndex;
-                var successorIndex = this.viewModel.items[i].visibleIndex;
-                var type = this.viewModel.items[i].dependencies[j].type;
                 var id = this.viewModel.items[i].dependencies[j].id;
-                var connectorInfo = this.getConnectorInfo(id, predessorIndex, successorIndex, type);
-                connectorInfo.forEach(function (connectorLine) {
-                    _this.addElementInfoToTileMap(connectorLine, _this.tileToDependencyMap, true);
-                });
+                if (id == dependencyId)
+                    this.createConnecotInfo(this.viewModel.items[i].dependencies[j], this.viewModel.items[i].visibleIndex);
             }
         }
+    };
+    GridLayoutCalculator.prototype.createConnecotInfo = function (dependencyInfo, successorIndex) {
+        var _this = this;
+        var predessorIndex = dependencyInfo.predecessor.visibleIndex;
+        var type = dependencyInfo.type;
+        var id = dependencyInfo.id;
+        var connectorInfo = this.getConnectorInfo(id, predessorIndex, successorIndex, type);
+        connectorInfo.forEach(function (connectorLine) {
+            _this.addElementInfoToTileMap(connectorLine, _this.tileToDependencyMap, true);
+        });
     };
     GridLayoutCalculator.prototype.createTileToNonWorkingIntervalsMap = function () {
         this.tileToNoWorkingIntervalsMap = [];
@@ -2522,9 +2533,10 @@ var TaskPropertyManipulator = (function (_super) {
     }
     TaskPropertyManipulator.prototype.setValue = function (id, newValue) {
         var task = this.viewModel.tasks.getItemById(id);
+        var index = this.viewModel.tasks.items.indexOf(task);
         var oldState = new HistoryItemState_1.HistoryItemState(id, this.getPropertyValue(task));
         this.setPropertyValue(task, newValue);
-        this.viewModel.owner.resetAndUpdate();
+        this.viewModel.owner.recreateTaskElement(index);
         return oldState;
     };
     TaskPropertyManipulator.prototype.restoreValue = function (state) {
@@ -2532,8 +2544,9 @@ var TaskPropertyManipulator = (function (_super) {
             return;
         var stateValue = state.value;
         var task = this.viewModel.tasks.getItemById(state.taskId);
+        var index = this.viewModel.tasks.items.indexOf(task);
         this.setPropertyValue(task, stateValue);
-        this.viewModel.owner.resetAndUpdate();
+        this.viewModel.owner.recreateTaskElement(index);
     };
     return TaskPropertyManipulator;
 }(BaseManipulator));
@@ -2684,6 +2697,11 @@ var MouseHandlerDragBaseState = (function (_super) {
     }
     MouseHandlerDragBaseState.prototype.onMouseDown = function (evt) {
         this.currentPosition = new Point_1.Point(DomUtils_1.DomUtils.getEventX(evt), DomUtils_1.DomUtils.getEventY(evt));
+        if (this.handler.control.taskEditController.dependencyId != null) {
+            this.handler.control.taskEditController.selectDependency(null);
+            this.handler.control.gridLayoutCalculator.createTileToConnectorLinesMap();
+            this.handler.control.recreateConnectorLineElements();
+        }
     };
     MouseHandlerDragBaseState.prototype.onMouseUp = function (evt) {
         this.onMouseUpInternal(evt);
@@ -3658,11 +3676,8 @@ var TaskEditController = (function () {
         }
     };
     TaskEditController.prototype.updateWrapInfo = function () {
-        this.wrapInfo = this.gantt.gridLayoutCalculator.getTaskWrapperElementInfo(this.taskIndex);
-        this.wrapInfo.size.width = this.gantt.gridLayoutCalculator.getTaskWidth(this.taskIndex);
+        this.wrapInfo = this.getTaskWrapperElementInfo(this.taskIndex);
         this.wrapInfo.position.x--;
-        if (this.task.isMilestone())
-            this.wrapInfo.position.y = this.gantt.gridLayoutCalculator.getSelectionPosition(this.taskIndex).y;
     };
     TaskEditController.prototype.hide = function () {
         var parentNode = this.baseElement.parentNode;
@@ -3672,8 +3687,7 @@ var TaskEditController = (function () {
     TaskEditController.prototype.showDependencySuccessor = function (taskIndex) {
         if (this.successorIndex != taskIndex && this.taskIndex != taskIndex) {
             this.successorIndex = taskIndex;
-            var wrapInfo = this.gantt.gridLayoutCalculator.getTaskWrapperElementInfo(taskIndex);
-            wrapInfo.size.width = this.gantt.gridLayoutCalculator.getTaskWidth(taskIndex) + 1;
+            var wrapInfo = this.getTaskWrapperElementInfo(taskIndex);
             wrapInfo.assignPosition(this.dependencySuccessorBaseElement);
             wrapInfo.assignSize(this.dependencySuccessorBaseElement);
             wrapInfo.assignSize(this.dependencySuccessorFrame);
@@ -3858,6 +3872,14 @@ var TaskEditController = (function () {
     TaskEditController.prototype.formatDate = function (date) {
         return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + "/" +
             date.getFullYear() + " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+    };
+    TaskEditController.prototype.getTaskWrapperElementInfo = function (taskIndex) {
+        var calculator = this.gantt.gridLayoutCalculator;
+        var info = calculator.getTaskWrapperElementInfo(taskIndex);
+        info.size.width = calculator.getTaskWidth(taskIndex);
+        if (this.gantt.viewModel.items[taskIndex].task.isMilestone())
+            info.position.y = calculator.getSelectionPosition(taskIndex).y;
+        return info;
     };
     TaskEditController.prototype.createElements = function () {
         this.baseElement = document.createElement("DIV");
@@ -4422,6 +4444,16 @@ var GanttView = (function () {
             .filter(function (info) { return oldRenderedElementsInfo.indexOf(info) === -1; })
             .forEach(function (info) { createAction(info); });
     };
+    GanttView.prototype.recreateTaskElement = function (index) {
+        var _this = this;
+        this.removeTaskElement(index);
+        this.createTaskElement(index);
+        var task = this.viewModel.tasks.items[index];
+        var dependencies = this.viewModel.dependencies.items.filter(function (d) { return d.predecessorId == task.id || d.successorId == task.id; });
+        if (dependencies.length)
+            dependencies.forEach(function (d) { return _this.gridLayoutCalculator.updateTileToConnectorLinesMap(d.internalId); });
+        this.recreateConnectorLineElements();
+    };
     GanttView.prototype.allowTaskAreaBorders = function (isVerticalScroll) {
         return isVerticalScroll ? this.settings.areHorizontalBordersEnabled : this.settings.areVerticalBordersEnabled;
     };
@@ -4864,7 +4896,9 @@ var ViewVisualModel = (function () {
         var item = this._itemList.filter(function (value) { return value.task && value.task.internalId === id; })[0];
         if (item) {
             item.selected = selected;
-            this.changed();
+            var taskIndex = this.tasks.items.indexOf(item.task);
+            if (taskIndex >= 0)
+                this.owner.recreateTaskElement(this.tasks.items.indexOf(item.task));
         }
     };
     ViewVisualModel.prototype.beginUpdate = function () {
@@ -5975,7 +6009,8 @@ var TaskDependencyManipulator = (function (_super) {
         this.viewModel.dependencies.add(dependency);
         this.dispatcher.notifyDependencyInserted(this.getObjectForDataSource(dependency), function (id) { return dependency.id = id; });
         this.viewModel.updateVisibleItemDependencies();
-        this.viewModel.owner.resetAndUpdate();
+        this.viewModel.owner.gridLayoutCalculator.updateTileToConnectorLinesMap(dependency.internalId);
+        this.viewModel.owner.recreateConnectorLineElements();
         return dependency;
     };
     TaskDependencyManipulator.prototype.removeDependency = function (dependencyId) {
@@ -5983,7 +6018,8 @@ var TaskDependencyManipulator = (function (_super) {
         this.viewModel.dependencies.remove(dependency);
         this.dispatcher.notifyDependencyRemoved(dependency.id);
         this.viewModel.updateVisibleItemDependencies();
-        this.viewModel.owner.resetAndUpdate();
+        this.viewModel.owner.gridLayoutCalculator.updateTileToConnectorLinesMap(dependency.internalId);
+        this.viewModel.owner.recreateConnectorLineElements();
         return dependency;
     };
     TaskDependencyManipulator.prototype.getObjectForDataSource = function (dependency) {
@@ -6077,7 +6113,7 @@ var ResourcesManipulator = (function (_super) {
     ResourcesManipulator.prototype.deassig = function (assignmentId) {
         var assignment = this.viewModel.assignments.getItemById(assignmentId);
         this.viewModel.assignments.remove(assignment);
-        this.dispatcher.notifyResourceUnassigned(assignment);
+        this.dispatcher.notifyResourceUnassigned(assignmentId);
         this.viewModel.updateModel();
         this.viewModel.owner.resetAndUpdate();
         return assignment;
@@ -6143,8 +6179,8 @@ var TaskManipulator = (function (_super) {
         }
         task.id = task.internalId;
         this.viewModel.tasks.add(task);
-        this.viewModel.updateModel();
         this.dispatcher.notifyTaskCreated(this.getObjectForDataSource(task), function (id) { return task.id = id; });
+        this.viewModel.updateModel();
         this.viewModel.owner.resetAndUpdate();
         return task;
     };
@@ -6459,18 +6495,22 @@ var MouseHandlerDefaultState = (function (_super) {
     MouseHandlerDefaultState.prototype.onMouseDown = function (evt) {
         evt.preventDefault();
         var source = DomUtils_1.DomUtils.getEventSource(evt);
-        if (source.className == GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_HORIZONTAL ||
-            source.className == GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_VERTICAL) {
+        if (DomUtils_1.DomUtils.elementHasCssClass(source, GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_HORIZONTAL) ||
+            DomUtils_1.DomUtils.elementHasCssClass(source, GridLayoutCalculator_1.GridLayoutCalculator.CLASSNAMES.CONNECTOR_VERTICAL)) {
             var id = source.getAttribute("dependency-id");
-            this.handler.control.taskEditController.selectDependency(id);
-            this.handler.control.resetAndUpdate();
+            if (this.handler.control.taskEditController.dependencyId != id) {
+                this.handler.control.taskEditController.selectDependency(id);
+                this.handler.control.gridLayoutCalculator.createTileToConnectorLinesMap();
+                this.handler.control.recreateConnectorLineElements();
+            }
         }
         else {
             if (DomUtils_1.DomUtils.IsLeftButtonPressed(evt))
                 this.ganttMovingHelper.startMoving(evt);
             if (this.handler.control.taskEditController.dependencyId != null) {
                 this.handler.control.taskEditController.selectDependency(null);
-                this.handler.control.resetAndUpdate();
+                this.handler.control.gridLayoutCalculator.createTileToConnectorLinesMap();
+                this.handler.control.recreateConnectorLineElements();
             }
         }
     };

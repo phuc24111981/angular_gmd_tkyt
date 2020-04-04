@@ -31,7 +31,9 @@
     </dx-pivot-grid>
   </div> -->
 
-
+  <h3 style="color: red;">Triệu chứng</h3>
+  <br/>
+  
   <dx-data-grid style="width: 100%;" id="gridContainer"
     [dataSource]="trieuchungData"
     [remoteOperations]="false"
@@ -46,12 +48,68 @@
     ></dxo-pager>
 
 
-    <dxi-column dataField="TEN"  caption="Triệu chứng" [width]="95"></dxi-column>
+    <dxi-column dataField="TEN" caption="Triệu chứng" [width]="95"></dxi-column>
     <dxi-column dataField="SL" caption="Số lượng" dataType="number" alignment="right" [width]="80"></dxi-column>
     <dxi-column dataField="madv" dataType="string" caption="Đơn vị" [width]="70" [groupIndex]="0"></dxi-column>
     <dxi-column dataField="tenpb" dataType="string" caption="Phòng ban" [groupIndex]="1"></dxi-column>
-    <dxo-export [enabled]="true" fileName="gmd_kb_trieuchung"></dxo-export>
+    <dxo-export [enabled]="export" fileName="gmd_kb_trieuchung"></dxo-export>
     <dxo-group-panel [visible]="true"></dxo-group-panel>
     <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  </dx-data-grid>
+  <div style="width: 100%; height: 2px; border: 1px solid #cccccc;"></div>
+  <br/>
+  
+  <h3 style="color: green;">Tiếp xúc</h3>
+  <br/>
+  <dx-data-grid style="width: 100%;" id="gridContainer2"
+  [dataSource]="tiepxucData"
+  [remoteOperations]="false"
+  [allowColumnReordering]="true"
+  [rowAlternationEnabled]="true"
+  [showBorders]="true">
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 25, 50, 100]"
+  ></dxo-pager>
+
+
+  <dxi-column dataField="TEN"  caption="Tiếp xúc" [width]="165" cellTemplate="cellTemplate"></dxi-column>
+  <dxi-column dataField="SL" caption="Số lượng" dataType="number" alignment="right" [width]="65" ></dxi-column>
+  <dxi-column dataField="madv" dataType="string" caption="Đơn vị" [width]="70" [groupIndex]="0"></dxi-column>
+  <dxi-column dataField="tenpb" dataType="string" caption="Phòng ban" [groupIndex]="1"></dxi-column>
+  <div *dxTemplate="let cell of 'cellTemplate'">
+    <div style="font-size: small;">{{cell.text}}</div>
+  </div>
+  <dxo-export [enabled]="export" fileName="gmd_kb_tiepxuc"></dxo-export>
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+</dx-data-grid>
+<div style="width: 100%; height: 2px; border: 1px solid #cccccc;"></div>
+<br/>
+<h3 style="color: blue;">Di chuyển</h3>
+<br/>
+<dx-data-grid style="width: 100%;" id="gridContainer3"
+[dataSource]="dichuyenData"
+[remoteOperations]="false"
+[allowColumnReordering]="true"
+[rowAlternationEnabled]="true"
+[showBorders]="true">
+
+<dxo-paging [pageSize]="10"></dxo-paging>
+<dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[10, 25, 50, 100]"
+></dxo-pager>
+
+
+<dxi-column dataField="DIA_DIEM_DEN"  caption="Địa điểm" ></dxi-column>
+<dxi-column dataField="SL" caption="Số lượng" dataType="number" alignment="right" [width]="65"></dxi-column>
+<dxi-column dataField="madv" dataType="string" caption="Đơn vị" [width]="70" [groupIndex]="0"></dxi-column>
+<dxi-column dataField="tenpb" dataType="string" caption="Phòng ban" [groupIndex]="1"></dxi-column>
+<dxo-export [enabled]="export" fileName="gmd_kb_dichuyen"></dxo-export>
+<dxo-group-panel [visible]="true"></dxo-group-panel>
+<dxo-grouping [autoExpandAll]="false"></dxo-grouping>
 </dx-data-grid>
 </ion-content>
