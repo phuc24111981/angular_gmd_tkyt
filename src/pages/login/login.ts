@@ -15,6 +15,7 @@ export class LoginPage
   password = '';
   loading: any;
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams) {
+    //this.password = '123';
   }
   presentloading()
   {

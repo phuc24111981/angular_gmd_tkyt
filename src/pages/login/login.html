@@ -26,9 +26,17 @@
             </dx-validator>
         </dx-text-box>
     </div>
-
     <div class="dx-field">
-        <dx-button type="default" text="Login" (onClick)="onLoginClick($event)" width="100%"></dx-button>
+      <strong>1. Yêu cầu nhập đúng Mã Nhân Viên.</strong>
+      <br/>
+      <i>Hệ thống có ghi lại lịch sử khai báo, nếu cố tình nhập sai Mã Nhân Viên hoặc khai báo không đúng, Nhân viên phải chịu trách nhiệm với Công Ty.</i>
+      <br/>
+      <strong>2. Nếu là lần đầu tiên đăng nhập thì nhập mật khẩu là 123.</strong>
+      <br/>
+      Xin cảm ơn.
+    </div>
+    <div class="dx-field">
+        <dx-button type="default" text="Đăng nhập" (onClick)="onLoginClick($event)" width="100%"></dx-button>
     </div>
 
 </dx-validation-group>
