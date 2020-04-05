@@ -4,7 +4,7 @@ import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
-
+import { ActionSheetController } from 'ionic-angular';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -28,7 +28,7 @@ export class TrieuchungPage
   loading: any;
 
 
-  constructor(public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
+  constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
@@ -57,6 +57,40 @@ export class TrieuchungPage
     });
     alert.present();
   }
+
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: 
+        [
+            {
+                text: 'Tải lại dữ liệu',
+                handler: () =>
+                {
+                  this.loadDataTrieuchung();
+                }
+            }
+            ,
+            {
+                text: 'Đổi mật khẩu',
+
+                handler: () => {
+                    
+                }
+            }
+            ,
+            {
+                text: 'Đăng xuất',
+
+                handler: () => {
+                    
+                }
+            }
+        ]
+    });
+
+    actionSheet.present();
+}
 
   Save()
   {

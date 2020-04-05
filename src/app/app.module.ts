@@ -27,7 +27,8 @@ import { DichuyenaddnewPage } from '../pages/dichuyenaddnew/dichuyenaddnew';
 // import { DxDataGridModule, DxBulletModule, DxTemplateModule, DxPivotGridModule, DxChartModule } from 'devextreme-angular';
 import { DevExtremeModule } from 'devextreme-angular'; // import all devextreme modules
 import { LoginPage } from '../pages/login/login';
-
+import { LogoutPage } from '../pages/logout/logout';
+import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 
 @NgModule
 (
@@ -41,7 +42,9 @@ import { LoginPage } from '../pages/login/login';
       TiepxucPage,
       TrieuchungPage,
       DichuyenaddnewPage,
-      LoginPage
+      LoginPage,
+      LogoutPage,
+      ChangepasswordPage
     ],
     imports: 
     [
@@ -64,7 +67,9 @@ import { LoginPage } from '../pages/login/login';
       TrieuchungPage,
       ThongkePage,
       DichuyenaddnewPage,
-      LoginPage
+      LoginPage,
+      LogoutPage,
+      ChangepasswordPage
     ],
     providers: 
     [
