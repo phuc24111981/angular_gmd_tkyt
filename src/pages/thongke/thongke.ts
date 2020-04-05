@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController, App } from 'ionic-angular';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { DxPivotGridComponent, DxChartComponent } from 'devextreme-angular';
 import { HttpProvider } from '../../providers/http/http';
@@ -32,7 +32,7 @@ export class ThongkePage
 
   export: boolean = true;
 
-  constructor(public actionSheetCtrl: ActionSheetController, public platform: Platform, public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
+  constructor(private app:App, public actionSheetCtrl: ActionSheetController, public platform: Platform, public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     //this.customizeTooltip = this.customizeTooltip.bind(this);
     if (this.platform.is('android')) 
@@ -76,7 +76,7 @@ export class ThongkePage
 
                 handler: () => {
                   dbase.clearUser();
-                  this.platform.exitApp();
+                  this.app.getRootNav().setRoot(LoginPage);
                 }
             }
         ]

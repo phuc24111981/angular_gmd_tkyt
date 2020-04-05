@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ActionSheetController, App } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
@@ -23,7 +23,7 @@ export class TiepxucPage
   indexData: any;
   loading: any;
 
-  constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
+  constructor(private app:App, public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
@@ -56,7 +56,7 @@ export class TiepxucPage
 
                 handler: () => {
                   dbase.clearUser();
-                  this.platform.exitApp();
+                  this.app.getRootNav().setRoot(LoginPage);
                 }
             }
         ]
@@ -119,7 +119,7 @@ export class TiepxucPage
 
         if (jsonData[0]['r'] == 0) 
         {
-          this.presentAlert("Lỗi", "Có lỗi xảy ra, không lưu được");
+          this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
         }
         else 
         {

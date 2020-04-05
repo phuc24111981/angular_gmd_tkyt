@@ -27,12 +27,13 @@ export class LoginPage
   {
     this.loading.dismiss();
   }
-  onLoginClick(args) {
+  onLoginClick(args) 
+  {
     if (!args.validationGroup.validate().isValid) {
       return;
     }
     dbase.setUser(this.login);
-    this.navCtrl.setRoot(TabsPage)
+    this.navCtrl.setRoot(TabsPage);
   }
   ionViewDidLoad() {
     //dbase.setUser('00070');

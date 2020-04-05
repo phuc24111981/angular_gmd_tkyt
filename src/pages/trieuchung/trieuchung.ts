@@ -6,6 +6,7 @@ import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
 import { ActionSheetController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { App } from 'ionic-angular';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -29,7 +30,7 @@ export class TrieuchungPage
   loading: any;
   rootPage:any;
 
-  constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
+  constructor(private app:App, public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
@@ -85,8 +86,10 @@ export class TrieuchungPage
 
                 handler: () => {
                     dbase.clearUser();
-                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                    this.platform.exitApp();
+                    //this.navCtrl.setRoot(LoginPage);
+                    this.app.getRootNav().setRoot(LoginPage);
+                    //this.router.navigateByUrl('/login/login.html');
+                    //this.platform.exitApp();
                     
                 }
             }
@@ -130,7 +133,7 @@ export class TrieuchungPage
         this.indexDataTrieuchung = jsonData;
         if (jsonData[0]['r'] == 0) 
         {
-          this.presentAlert("Lỗi", "Có lỗi xảy ra, không lưu được");
+          this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
         }
         else 
         {

@@ -13,6 +13,22 @@
 <ion-content padding>
   <dx-validation-group>
     <div class="dx-field">
+      <strong>Chào mừng bạn đến với Hệ thống Khai Báo Y Tế nhằm phục vụ công tác chống dịch COVID-19 của Công ty cổ phần Gemadept</strong><br/>
+      <u>Các yêu cầu khi sử dụng hệ thống :</u>
+      <br/>
+      <strong>1. Nhập đúng Mã Nhân Viên</strong>
+      <br/>
+      <i>** Hệ thống có ghi lại lịch sử nhập liệu, nếu cố tình nhập sai Mã Nhân Viên hoặc khai báo không đúng, Nhân viên phải chịu trách nhiệm với Công Ty</i>
+      <br/>
+      <strong>2. Nếu là lần đầu tiên đăng nhập thì nhập mật khẩu là 123</strong>
+      <br/>
+      Mọi thắc mắc trong quá trình sử dụng, xin vui lòng liên hệ :
+      <br/>
+      <u>Phúc / IT</u> : 0962300108
+      <br/> 
+      Xin cảm ơn
+    </div>
+    <div class="dx-field">
         <dx-text-box [(value)]="login" placeholder="Mã nhân viên" width="100%">
             <dx-validator>
                 <dxi-validation-rule type="required" message="Nhập mã nhân viên"></dxi-validation-rule>
@@ -26,15 +42,7 @@
             </dx-validator>
         </dx-text-box>
     </div>
-    <div class="dx-field">
-      <strong>1. Yêu cầu nhập đúng Mã Nhân Viên.</strong>
-      <br/>
-      <i>Hệ thống có ghi lại lịch sử khai báo, nếu cố tình nhập sai Mã Nhân Viên hoặc khai báo không đúng, Nhân viên phải chịu trách nhiệm với Công Ty.</i>
-      <br/>
-      <strong>2. Nếu là lần đầu tiên đăng nhập thì nhập mật khẩu là 123.</strong>
-      <br/>
-      Xin cảm ơn.
-    </div>
+
     <div class="dx-field">
         <dx-button type="default" text="Đăng nhập" (onClick)="onLoginClick($event)" width="100%"></dx-button>
     </div>
