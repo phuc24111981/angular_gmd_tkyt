@@ -1,10 +1,12 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { DxPivotGridComponent, DxChartComponent } from 'devextreme-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
+import { LoginPage } from '../login/login';
+import { dbase } from '../../providers/dbase';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -30,7 +32,7 @@ export class ThongkePage
 
   export: boolean = true;
 
-  constructor(public platform: Platform, public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
+  constructor(public actionSheetCtrl: ActionSheetController, public platform: Platform, public loadingCtrl: LoadingController, public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     //this.customizeTooltip = this.customizeTooltip.bind(this);
     if (this.platform.is('android')) 
@@ -48,7 +50,40 @@ export class ThongkePage
     }
     
   }
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: 
+        [
+            {
+                text: 'Tải lại dữ liệu',
+                handler: () =>
+                {
+                  this.loadDataTrieuchung();
+                }
+            }
+            ,
+            {
+                text: 'Đổi mật khẩu',
 
+                handler: () => {
+                    
+                }
+            }
+            ,
+            {
+                text: 'Đăng xuất',
+
+                handler: () => {
+                  dbase.clearUser();
+                  this.platform.exitApp();
+                }
+            }
+        ]
+    });
+
+    actionSheet.present();
+  }
 //   ngAfterViewInit() 
 //   {
 //     this.pivotGrid.instance.bindChart(this.chart.instance, 

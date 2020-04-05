@@ -1,9 +1,10 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ActionSheetController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
+import { LoginPage } from '../login/login';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -22,11 +23,46 @@ export class TiepxucPage
   indexData: any;
   loading: any;
 
-  constructor(public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
+  constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
     this.usercode = dbase.getUser();
+  }
+
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: 
+        [
+            {
+                text: 'Tải lại dữ liệu',
+                handler: () =>
+                {
+                  this.loadData();
+                }
+            }
+            ,
+            {
+                text: 'Đổi mật khẩu',
+
+                handler: () => {
+                    
+                }
+            }
+            ,
+            {
+                text: 'Đăng xuất',
+
+                handler: () => {
+                  dbase.clearUser();
+                  this.platform.exitApp();
+                }
+            }
+        ]
+    });
+
+    actionSheet.present();
   }
   presentloading()
   {
@@ -51,9 +87,10 @@ export class TiepxucPage
 
   Save()
   {
-    this.presentloading();
-    if(this.usercode.length > 0)
+    
+    if(dbase.checkLogin())
     {
+      this.presentloading();
       console.log(this.indexData);
       var dataM: string = JSON.stringify(this.indexData);
       console.log(dataM);
@@ -66,7 +103,7 @@ export class TiepxucPage
     }
     else
     {
-      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+      this.presentAlert('','Vui lòng đăng nhập');
     }
   }
 
@@ -94,6 +131,7 @@ export class TiepxucPage
 
   ionViewDidEnter() 
   {    
+    this.usercode = dbase.getUser();
     this.loadData();
   }
 

@@ -1,10 +1,11 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ActionSheetController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { DichuyenaddnewPage } from '../dichuyenaddnew/dichuyenaddnew';
 import { dbase } from '../../providers/dbase';
+import { LoginPage } from '../login/login';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -23,13 +24,46 @@ export class DichuyenPage {
   indexData: any;
   loading: any;
 
-  constructor(public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
+  constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    this.usercode = dbase.getUser();
+    
   }
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+        title: '',
+        buttons: 
+        [
+            {
+                text: 'Tải lại dữ liệu',
+                handler: () =>
+                {
+                  this.loadData();
+                }
+            }
+            ,
+            {
+                text: 'Đổi mật khẩu',
 
+                handler: () => {
+                    
+                }
+            }
+            ,
+            {
+                text: 'Đăng xuất',
+
+                handler: () => {
+                  dbase.clearUser();
+                  this.platform.exitApp();
+                }
+            }
+        ]
+    });
+
+    actionSheet.present();
+  }
   presentloading()
   {
     this.loading = this.loadingCtrl.create();
@@ -53,7 +87,7 @@ export class DichuyenPage {
   }
   Addnew()
   {
-    if(this.usercode.length > 0)
+    if(dbase.checkLogin())
     {
       this.navCtrl.push(DichuyenaddnewPage,
         {
@@ -62,12 +96,13 @@ export class DichuyenPage {
     }
     else
     {
-      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+      this.presentAlert('','Vui lòng đăng nhập');
     }
   }
 
   ionViewDidEnter() 
   {    
+    this.usercode = dbase.getUser();
     this.loadData();
   }
 

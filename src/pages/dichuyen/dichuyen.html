@@ -2,11 +2,13 @@
   <ion-navbar>
     <ion-title>Di chuyển</ion-title>
     <ion-buttons end>
-    <button ion-button (click)="loadData()"
-    icon-only style="margin-left:25px;padding-right:15px;">
-    <ion-icon name="refresh"></ion-icon>
-    </button>
-  </ion-buttons>
+
+      <button ion-button (click)="presentActionSheet()"
+              icon-only style="margin-left:25px;padding-right:15px;">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

@@ -5,6 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
 import { ActionSheetController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -26,13 +27,13 @@ export class TrieuchungPage
   usercode: string = '';
   indexDataTrieuchung: any;
   loading: any;
-
+  rootPage:any;
 
   constructor(public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public platform: Platform, 
     public ht:HttpProvider, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.devWidth = this.platform.width();
-    this.usercode = dbase.getUser();
+    
     
   }
 
@@ -75,7 +76,7 @@ export class TrieuchungPage
                 text: 'Đổi mật khẩu',
 
                 handler: () => {
-                    
+                  
                 }
             }
             ,
@@ -83,6 +84,9 @@ export class TrieuchungPage
                 text: 'Đăng xuất',
 
                 handler: () => {
+                    dbase.clearUser();
+                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                    this.platform.exitApp();
                     
                 }
             }
@@ -90,11 +94,11 @@ export class TrieuchungPage
     });
 
     actionSheet.present();
-}
+  }
 
   Save()
   {
-    if(this.usercode.length > 0)
+    if(dbase.checkLogin())
     {
       this.presentloading();
       console.log(this.indexDataTrieuchung);
@@ -109,7 +113,7 @@ export class TrieuchungPage
     }
     else
     {
-      this.presentAlert('Lỗi','Vui lòng nhập Mã nhân viên');
+      this.presentAlert('','Vui lòng đăng nhập');
     }
   }
 
