@@ -5,6 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
 import { LoginPage } from '../login/login';
+import { ChangepasswordPage } from '../changepassword/changepassword';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -47,7 +48,7 @@ export class TiepxucPage
                 text: 'Đổi mật khẩu',
 
                 handler: () => {
-                    
+                  this.navCtrl.push(ChangepasswordPage);
                 }
             }
             ,
@@ -55,7 +56,7 @@ export class TiepxucPage
                 text: 'Đăng xuất',
 
                 handler: () => {
-                  dbase.clearUser();
+                  dbase.logout();
                   this.app.getRootNav().setRoot(LoginPage);
                 }
             }

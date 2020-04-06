@@ -84,7 +84,7 @@ export class DichuyenaddnewPage
 
         if (jsonData[0]['r'] == 0) 
         {
-          this.presentAlert("Lỗi", "Có lỗi xảy ra, không lưu được");
+          this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
         }
         else 
         {

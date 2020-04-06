@@ -7,6 +7,7 @@ import { dbase } from '../../providers/dbase';
 import { ActionSheetController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { App } from 'ionic-angular';
+import { ChangepasswordPage } from '../changepassword/changepassword';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -77,7 +78,7 @@ export class TrieuchungPage
                 text: 'Đổi mật khẩu',
 
                 handler: () => {
-                  
+                  this.navCtrl.push(ChangepasswordPage);
                 }
             }
             ,
@@ -85,7 +86,7 @@ export class TrieuchungPage
                 text: 'Đăng xuất',
 
                 handler: () => {
-                    dbase.clearUser();
+                  dbase.logout();
                     //this.navCtrl.setRoot(LoginPage);
                     this.app.getRootNav().setRoot(LoginPage);
                     //this.router.navigateByUrl('/login/login.html');

@@ -6,6 +6,7 @@ import { Inf } from '../../providers/myInfList';
 import { DichuyenaddnewPage } from '../dichuyenaddnew/dichuyenaddnew';
 import { dbase } from '../../providers/dbase';
 import { LoginPage } from '../login/login';
+import { ChangepasswordPage } from '../changepassword/changepassword';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -47,7 +48,7 @@ export class DichuyenPage {
                 text: 'Đổi mật khẩu',
 
                 handler: () => {
-                    
+                  this.navCtrl.push(ChangepasswordPage);
                 }
             }
             ,
@@ -55,7 +56,8 @@ export class DichuyenPage {
                 text: 'Đăng xuất',
 
                 handler: () => {
-                  dbase.clearUser();
+                  //dbase.clearUser();
+                  dbase.logout();
                   this.app.getRootNav().setRoot(LoginPage);
                 }
             }

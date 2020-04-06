@@ -7,6 +7,7 @@ import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
 import { LoginPage } from '../login/login';
 import { dbase } from '../../providers/dbase';
+import { ChangepasswordPage } from '../changepassword/changepassword';
 
 if(!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -67,7 +68,7 @@ export class ThongkePage
                 text: 'Đổi mật khẩu',
 
                 handler: () => {
-                    
+                  this.navCtrl.push(ChangepasswordPage);
                 }
             }
             ,
@@ -75,7 +76,7 @@ export class ThongkePage
                 text: 'Đăng xuất',
 
                 handler: () => {
-                  dbase.clearUser();
+                  dbase.logout();
                   this.app.getRootNav().setRoot(LoginPage);
                 }
             }

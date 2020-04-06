@@ -120,10 +120,16 @@ export class Inf {
     
 
   static loginUrl(username: string, password: string): string {
-      var addString: string = '?username=' + username + '&password=' + password;
-      var result = this.mainUrl + '/Login' + addString;
+      var addString: string = '?u=' + username + '&p=' + password;
+      var result = this.mainUrl + '/lc' + addString;
       return result;
   }
+
+  static passChangeUrl(username: string, password: string, newpassword): string {
+    var addString: string = '?u=' + username + '&p=' + password + '&np=' + newpassword;
+    var result = this.mainUrl + '/pc' + addString;
+    return result;
+}
 
   
   static lichsudichuyenInsert(u: string, DIA_DIEM_DEN: string, NGAY_BAT_DAU: string,
