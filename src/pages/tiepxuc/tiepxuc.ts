@@ -112,7 +112,7 @@ export class TiepxucPage
   {
     this.dismissloading();
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    if( dataMessage  != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");
@@ -127,7 +127,10 @@ export class TiepxucPage
           this.presentAlert("Thành công", "Dữ liệu đã được lưu");
         }
     }
-
+    else
+    {
+      this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
+    }
   }
 
   ionViewDidEnter() 
@@ -153,12 +156,16 @@ export class TiepxucPage
     this.dismissloading();
     this.indexData = null;
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    if( dataMessage != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");
         let jsonData = JSON.parse(str);
         this.indexData = jsonData;
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
     }
 
   }

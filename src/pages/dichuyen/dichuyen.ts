@@ -125,7 +125,7 @@ export class DichuyenPage {
     //this.dismissloading();
     this.indexData = null;
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    if( dataMessage != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");

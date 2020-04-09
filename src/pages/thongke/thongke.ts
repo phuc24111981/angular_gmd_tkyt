@@ -1,7 +1,7 @@
 import { Component, enableProdMode } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController, App } from 'ionic-angular';
-import { ViewChild, AfterViewInit } from '@angular/core';
-import { DxPivotGridComponent, DxChartComponent } from 'devextreme-angular';
+// import { ViewChild, AfterViewInit } from '@angular/core';
+// import { DxPivotGridComponent, DxChartComponent } from 'devextreme-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Platform } from 'ionic-angular';
 import { Inf } from '../../providers/myInfList';
@@ -132,7 +132,7 @@ export class ThongkePage
       let dataMessage: any = data;
       this.trieuchungData = null;
       console.log(dataMessage);
-      if( dataMessage.length > 0 )
+      if( dataMessage != 'e' )
       {
           let str = JSON.stringify(dataMessage);
           str = str.replace(/\\'/g, "'");
@@ -154,7 +154,7 @@ export class ThongkePage
       let dataMessage: any = data;
       this.tiepxucData = null;
       console.log(dataMessage);
-      if( dataMessage.length > 0 )
+      if( dataMessage  != 'e' )
       {
           let str = JSON.stringify(dataMessage);
           str = str.replace(/\\'/g, "'");
@@ -176,7 +176,7 @@ export class ThongkePage
       let dataMessage: any = data;
       this.dichuyenData = null;
       console.log(dataMessage);
-      if( dataMessage.length > 0 )
+      if( dataMessage  != 'e' )
       {
           let str = JSON.stringify(dataMessage);
           str = str.replace(/\\'/g, "'");

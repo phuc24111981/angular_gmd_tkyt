@@ -25,7 +25,8 @@ export class HttpProvider
         },
         error => 
         {
-          console.log(error);            
+          //console.log(error); 
+          resolve('e');           
         }
       ); 
       

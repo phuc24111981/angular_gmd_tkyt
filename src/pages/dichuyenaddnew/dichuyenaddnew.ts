@@ -1,5 +1,5 @@
 import { Component, enableProdMode } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { Inf } from '../../providers/myInfList';
 import { dbase } from '../../providers/dbase';
@@ -25,8 +25,18 @@ export class DichuyenaddnewPage
   ngayketthuc: string = '';
   giokethuc: string = '';
   phuongtien: string = '';
+  loading: any;
+  constructor(public loadingCtrl: LoadingController, public ht:HttpProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
+  }
+  presentloading()
+  {
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
+  }
 
-  constructor(public ht:HttpProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
+  dismissloading()
+  {
+    this.loading.dismiss();
   }
 
   ionViewDidLoad() 
@@ -55,9 +65,10 @@ export class DichuyenaddnewPage
   {
     if(this.diadiemden.length > 0 && this.phuongtien.length > 0)
     {
-      console.log(this.saveData);
-      var dataM: string = JSON.stringify(this.saveData);
-      console.log(dataM);
+      // console.log(this.saveData);
+      // var dataM: string = JSON.stringify(this.saveData);
+      // console.log(dataM);
+      this.presentloading();
       var urlString = Inf.lichsudichuyenInsert(this.usercode,this.diadiemden,this.ngaybatdau,this.giobatdau,
         this.ngayketthuc,this.giokethuc,this.phuongtien);
       console.log(urlString);
@@ -76,7 +87,8 @@ export class DichuyenaddnewPage
   jsonSaveParse(dataMessage: any) 
   {
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    this.dismissloading();
+    if( dataMessage != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");
@@ -84,12 +96,16 @@ export class DichuyenaddnewPage
 
         if (jsonData[0]['r'] == 0) 
         {
-          this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
+          this.presentAlert("Lỗi", "Không thể kết nối với hệ thống");
         }
         else 
         {
           this.presentAlert("Thành công", "Dữ liệu đã được lưu");
         }
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
     }
 
   }

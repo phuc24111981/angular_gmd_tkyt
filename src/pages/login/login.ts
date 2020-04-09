@@ -63,7 +63,7 @@ export class LoginPage
       
       let dataMessage: any = data;
       console.log(dataMessage);
-      if( dataMessage.length > 0 )
+      if( dataMessage != 'e' )
       {
           let str = JSON.stringify(dataMessage);
           str = str.replace(/\\'/g, "'");
@@ -91,6 +91,10 @@ export class LoginPage
           {
             this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
           }
+      }
+      else
+      {
+        this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
       }
       this.dismissloading();
     });

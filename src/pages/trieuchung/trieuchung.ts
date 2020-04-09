@@ -126,7 +126,7 @@ export class TrieuchungPage
     this.dismissloading(); 
     this.indexDataTrieuchung = null;
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    if( dataMessage != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");
@@ -134,12 +134,16 @@ export class TrieuchungPage
         this.indexDataTrieuchung = jsonData;
         if (jsonData[0]['r'] == 0) 
         {
-          this.presentAlert("Lỗi", "Có lỗi xảy ra, xin xem lại kết nối internet");
+          this.presentAlert("Lỗi", "Không thể kết nối với hệ thống");
         }
         else 
         {
           this.presentAlert("Thành công", "Dữ liệu đã được lưu");
         }
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
     }
     
   }
@@ -167,12 +171,16 @@ export class TrieuchungPage
     this.dismissloading();
     this.indexDataTrieuchung = null;
     console.log(dataMessage);
-    if( dataMessage.length > 0 )
+    if( dataMessage  != 'e' )
     {
         let str = JSON.stringify(dataMessage);
         str = str.replace(/\\'/g, "'");
         let jsonData = JSON.parse(str);
         this.indexDataTrieuchung = jsonData;
+    }
+    else
+    {
+      this.presentAlert('Lỗi','Không thể kết nối với hệ thống');
     }
     
   }
